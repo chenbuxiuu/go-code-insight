@@ -1,0 +1,207 @@
+{
+  "name": "go-code-insight",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "0.2.5",
+  "publisher": "local",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chenbuxiuu/go-code-insight.git"
+  },
+  "homepage": "https://github.com/chenbuxiuu/go-code-insight#readme",
+  "bugs": {
+    "url": "https://github.com/chenbuxiuu/go-code-insight/issues"
+  },
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#F3F6F9",
+    "theme": "light"
+  },
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Debuggers",
+    "Other"
+  ],
+  "keywords": [
+    "go",
+    "golang",
+    "codelens",
+    "references",
+    "implementation",
+    "interface",
+    "debug",
+    "inline values",
+    "dependencies"
+  ],
+  "activationEvents": [
+    "onLanguage:go",
+    "workspaceContains:**/go.mod"
+  ],
+  "main": "./out/src/extension.js",
+  "extensionKind": [
+    "workspace"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "goCodeInsight.toggle",
+        "title": "%command.toggle%",
+        "category": "%category%"
+      },
+      {
+        "command": "goCodeInsight.refresh",
+        "title": "%command.refresh%",
+        "category": "%category%"
+      }
+    ],
+    "configuration": {
+      "title": "%config.title%",
+      "properties": {
+        "goCodeInsight.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%enable%"
+        },
+        "goCodeInsight.dependencies.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%dependencies.enable%"
+        },
+        "goCodeInsight.dependencies.index": {
+          "type": "boolean",
+          "default": true,
+          "description": "%dependencies.index%"
+        },
+        "goCodeInsight.dependencies.prebuild": {
+          "type": "string",
+          "enum": [
+            "sameOrg",
+            "all",
+            "off"
+          ],
+          "default": "sameOrg",
+          "enumDescriptions": [
+            "%dependencies.prebuild.sameOrg%",
+            "%dependencies.prebuild.all%",
+            "%dependencies.prebuild.off%"
+          ],
+          "description": "%dependencies.prebuild%"
+        },
+        "goCodeInsight.references.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%references.enable%"
+        },
+        "goCodeInsight.references.fields": {
+          "type": "boolean",
+          "default": true,
+          "description": "%references.fields%"
+        },
+        "goCodeInsight.implementations.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%implementations.enable%"
+        },
+        "goCodeInsight.implements.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%implements.enable%"
+        },
+        "goCodeInsight.implements.maxNames": {
+          "type": "integer",
+          "default": 3,
+          "minimum": 1,
+          "description": "%implements.maxNames%"
+        },
+        "goCodeInsight.implements.hideUnexportedForeign": {
+          "type": "boolean",
+          "default": true,
+          "description": "%implements.hideUnexportedForeign%"
+        },
+        "goCodeInsight.implements.exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "%implements.exclude%"
+        },
+        "goCodeInsight.methods.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%methods.enable%"
+        },
+        "goCodeInsight.packageImports.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%packageImports.enable%"
+        },
+        "goCodeInsight.outsideWorkspace.moduleIndex": {
+          "type": "boolean",
+          "default": true,
+          "description": "%outsideWorkspace.moduleIndex%"
+        },
+        "goCodeInsight.outsideWorkspace.idleMinutes": {
+          "type": "integer",
+          "default": 5,
+          "minimum": 1,
+          "description": "%outsideWorkspace.idleMinutes%"
+        },
+        "goCodeInsight.outsideWorkspace.maxServers": {
+          "type": "integer",
+          "default": 2,
+          "minimum": 1,
+          "maximum": 8,
+          "description": "%outsideWorkspace.maxServers%"
+        },
+        "goCodeInsight.goplsPath": {
+          "type": "string",
+          "default": "",
+          "description": "%goplsPath%"
+        },
+        "goCodeInsight.maxConcurrentRequests": {
+          "type": "integer",
+          "default": 8,
+          "minimum": 1,
+          "maximum": 16,
+          "description": "%maxConcurrentRequests%"
+        },
+        "goCodeInsight.refreshDelay": {
+          "type": "integer",
+          "default": 800,
+          "minimum": 100,
+          "description": "%refreshDelay%"
+        },
+        "goCodeInsight.inlineValues.enable": {
+          "type": "boolean",
+          "default": true,
+          "description": "%inlineValues.enable%"
+        },
+        "goCodeInsight.inlineValues.maxLength": {
+          "type": "integer",
+          "default": 50,
+          "minimum": 10,
+          "description": "%inlineValues.maxLength%"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "watch": "tsc -watch -p .",
+    "test:unit": "npm run compile && node --test out/test/goText.test.js out/test/goScopes.test.js out/test/goSymbols.test.js",
+    "test:e2e": "npm run compile && env -u ELECTRON_RUN_AS_NODE node out/test/runE2E.js",
+    "package": "npm run compile && vsce package --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "@types/vscode": "^1.90.0",
+    "@vscode/test-electron": "^3.1.0",
+    "@vscode/vsce": "^4.1.1",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,10 @@
+**
+!out/src/**/*.js
+!indexer/main.go
+!indexer/go.mod
+!images/icon.png
+!package.json
+!package.nls.json
+!package.nls.zh-cn.json
+!README.md
+!LICENSE
